@@ -22,14 +22,9 @@ type Movies = Movie[];
 type Filter = "seen" | "unseen" | "all";
 type Sort = "newest" | "oldest" | "rating" | "year";
 
-const sortings = ["newest", "oldest", "rating", "year"];
-const filters = ["seen", "unseen"];
 
 export const MovieTable = () => {
   const [movieList, setMovieList] = useState<Movies>([]);
-  const [filter, setFilter] = useState<Filter>("all");
-  const [sort, setSort] = useState<Sort>("rating");
-  const [search, setSearch] = useState<string>("");
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -63,14 +58,6 @@ export const MovieTable = () => {
     newMovieList[index].seen = !newMovieList[index].seen;
     setMovieList(newMovieList);
     localStorage.setItem("movieList", JSON.stringify(newMovieList));
-  };
-
-  const handleFilterChange = (newFilter: Filter) => {
-    setFilter(newFilter);
-  };
-
-  const handleSortChange = (newSort: Sort) => {
-    setSort(newSort); // Update the state with the new sort value
   };
 
   return (
@@ -121,11 +108,10 @@ export const MovieTable = () => {
               "flex items-start  rounded-2xl flex-row relative overflow-hidden cursor-pointer"
             )}
           >
-            <div className="text-md font-semibold py-2 px-3 bg-yellow-400 absolute left-3 top-0 rounded-b-2xl text-black">
-              {movie.rating}
-            </div>
-
-            <div className="rounded-2xl aspect-[10/15] relative h-full w-1/2">
+            <div className="rounded-2xl aspect-[10/15] relative h-full w-1/2 relative">
+              <div className="text-md font-semibold py-2 px-3 bg-yellow-400 absolute left-3 top-0 rounded-b-2xl text-black">
+                {movie.rating}
+              </div>
               <Image
                 src={movie.poster}
                 alt={movie.title}
